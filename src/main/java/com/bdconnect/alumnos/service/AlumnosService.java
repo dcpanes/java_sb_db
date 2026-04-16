@@ -27,12 +27,13 @@ public class AlumnosService {
         Alumnos saved = alumnosRespository.save(entity);
 
         // La respuesta ahora se tranforma a DTO para devolver al postman
-        AlumnosDTO response = new AlumnosDTO();
-        response.setId(saved.getId());
-        response.setNombre(saved.getNombre());
-        response.setApellido(saved.getApellido());
-        response.setEmail(saved.getEmail());
-        response.setTelefono(saved.getTelefono());
+        AlumnosDTO response = AlumnosDTO.builder()
+                .id(saved.getId())
+                .nombre(saved.getNombre())
+                .apellido(saved.getApellido())
+                .email(saved.getEmail())
+                .telefono(saved.getTelefono())
+                .build();
 
         return response;
     }

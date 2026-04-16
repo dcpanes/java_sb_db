@@ -3,6 +3,7 @@ package com.bdconnect.alumnos.dto;
 import lombok.*;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 
