@@ -5,6 +5,9 @@ import com.bdconnect.alumnos.model.Alumnos;
 import com.bdconnect.alumnos.repository.AlumnosRespository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AlumnosService {
 
@@ -36,6 +39,17 @@ public class AlumnosService {
                 .build();
 
         return response;
+    }
+
+    public List<AlumnosDTO> getAllAlumnos() {
+        List<Alumnos> alumnosList = alumnosRespository.findAll();
+        return alumnosList.stream().map(alumno -> AlumnosDTO.builder()
+                .id(alumno.getId())
+                .nombre(alumno.getNombre())
+                .apellido(alumno.getApellido())
+                .email(alumno.getEmail())
+                .telefono(alumno.getTelefono())
+                .build()).collect(Collectors.toList());
     }
 
 }
