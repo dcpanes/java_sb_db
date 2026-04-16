@@ -52,4 +52,42 @@ public class AlumnosService {
                 .build()).collect(Collectors.toList());
     }
 
+    public AlumnosDTO getAlumnosById(Long id) {
+        Alumnos alumno = alumnosRespository.findById(id).orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
+        return AlumnosDTO.builder()
+                .id(alumno.getId())
+                .nombre(alumno.getNombre())
+                .apellido(alumno.getApellido())
+                .email(alumno.getEmail())
+                .telefono(alumno.getTelefono())
+                .build();
+    }
+
+    public boolean deleteAlumnos(Long id) {
+        if (alumnosRespository.existsById(id)) {
+            alumnosRespository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    public AlumnosDTO updateAlumnos(Long id, AlumnosDTO alumnoDTO) {
+        Alumnos alumno = alumnosRespository.findById(id).orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
+
+        alumno.setNombre(alumnoDTO.getNombre());
+        alumno.setApellido(alumnoDTO.getApellido());
+        alumno.setEmail(alumnoDTO.getEmail());
+        alumno.setTelefono(alumnoDTO.getTelefono());
+
+        Alumnos updated = alumnosRespository.save(alumno);
+
+        return AlumnosDTO.builder()
+                .id(updated.getId())
+                .nombre(updated.getNombre())
+                .apellido(updated.getApellido())
+                .email(updated.getEmail())
+                .telefono(updated.getTelefono())
+                .build();
+    }
+
 }
